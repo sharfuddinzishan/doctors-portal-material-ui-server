@@ -14,7 +14,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Firebase Admin 
-var serviceAccount = require("./hero-doctors-firebase-adminsdk-jsh4q-1e0867f43b.json");
+var serviceAccount = require("./hero-doctors-firebase-adminsdk.json");
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
@@ -41,6 +41,11 @@ const herodoctors = async () => {
         const servicesCollection = client.db('herodoctors').collection('services');
         const appointmentCollection = client.db('herodoctors').collection('appointments');
         const usersCollection = client.db('herodoctors').collection('users');
+
+        // Check Server is Ok or Not
+        app.get('/', (req, res) => {
+            res.send('Welcome Hero Doctor App');
+        })
 
         // Add New User
         app.post('/users', async (req, res) => {
